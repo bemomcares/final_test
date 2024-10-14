@@ -50,7 +50,7 @@ db.init_app(app)
 # line_bot_api = LineBotApi('woxoHlA5zoiR0jCbH5C0idovIN5HJxRzNsnfjNMMuJzdmmhJ8/kvqB0VHrOfJypRvA2UT3dMBokj740xXSPmVVfu9cRG3O8Na320GTCBQ5cZIjy5NI5ASIhS4OO60y4NNizbWZZYmEVQntWXAt1zOwdB04t89/1O/w1cDnyilFU=')
 # handler = WebhookHandler('bdaad6ea13cfac5b6dcf75a02303e5cd')
 
-line_bot_api = LineBotApi(os.environ.get('Channel Access_Token'))
+line_bot_api = LineBotApi(os.environ.get('Channel_Access_Token'))
 handler = WebhookHandler(os.environ.get('Channel_Secret'))
 
 #LIFF靜態頁面
