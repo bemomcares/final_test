@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-template {
+            color: black;
+            background-color: white;
+            border: 1px solid black;
+            margin: 5px;
+        }
+
+        .btn-template:hover {
+            background-color: #f1f1f1;
+        }
+
+        .sidebar {
+            position: fixed;
+            /* 固定位置 */
+            top: 0;
+            left: -250px;
+            /* 預設隱藏 */
+            width: 250px;
+            height: 100%;
+            background-color: #f8f9fa;
+            transition: left 0.3s;
+            /* 平滑過渡 */
+            z-index: 1000;
+            /* 確保在其他內容上面 */
+        }
+
+        .sidebar.active {
+            left: 0;
+            /* 展開側邊欄 */
+        }
+
+        .btn-template {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .template1 {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #ffffff;
+        }
+
+        .template2 {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #ffc0cb;
+        }
+
+        .template3 {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #e6e6fa;
+        }
+
+        .diary-diary-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+        }
+
+        .navbar {
+            padding: 1rem 0;
+        }
+
+        #profile {
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-custom {
+            color: black;
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        .btn-custom:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-delete {
+            color: black;
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        .btn-delete:hover {
+            background-color: #f1f1f1;
+            color: red;
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body class="template1">
+
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <h2>Diary</h2>
+            <div id="profile">
+                <p id="userName"></p>
+            </div>
+            <button class="btn btn-template" id="menuButton" onclick="toggleSidebar()">選單</button>
+        </div>
+    </nav>
+    <!-- 登入登出 -->
+    <!-- 可折疊選單的側邊欄 -->
+    <div id="sidebar" class="sidebar">
+        <button class="btn btn-template" id="loginButton" onclick="login()">登入</button>
+        <button class="btn btn-template" id="logoutButton" style="display:none;" onclick="logout()">登出</button>
+        <button class="btn btn-template" onclick="switchTemplate('template1')">白色</button>
+        <button class="btn btn-template" onclick="switchTemplate('template2')">粉色</button>
+        <button class="btn btn-template" onclick="switchTemplate('template3')">紫色</button>
+        <button id="generatePdfButton" class="btn btn-template" type="button">生成並上傳 PDF</button>
+        <div id="pdfResult"></div>
+    </div>
+
+    <div class="container mt-5">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">首頁</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#new">新增日記</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#edit">編輯日記</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- 首頁內容 -->
+            <div id="home" class="container tab-pane active"><br>
+                <div id="diary-entries"></div>
+            </div>
+
+            <!-- 新增日記內容 -->
+            <div id="new" class="container tab-pane fade"><br>
+                <form id="newdiaryForm">
+                    <div class="form-group">
+                        <label for="jtitle">標題</label>
+                        <input type="text" class="form-control" id="jtitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jcontent">內容</label>
+                        <textarea class="form-control" id="jcontent" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="jdate">日期</label>
+                        <input type="date" class="form-control" id="jdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jphoto">照片</label>
+                        <input type="file" class="form-control-file" id="jphoto" accept=".jpg, .jpeg, .png" multiple>
+                        <div id="error-message" style="color: red;">(最多上傳四張)</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="jcycle">周數</label>
+                        <input type="number" class="form-control" id="jcycle" placeholder="輸入第幾周" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jfeeling">心情</label>
+                        <select class="form-control" id="jfeeling" required>
+                            <option value="開心">開心</option>
+                            <option value="生氣">生氣</option>
+                            <option value="鬱悶">鬱悶</option>
+                            <option value="想吐">想吐</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">新增</button>
+                </form>
+                <div id="alertMessage"></div>
+            </div>
+
+            <!-- 編輯日記內容 -->
+            <div id="edit" class="container tab-pane fade"><br>
+                <form id="edit-diary-form">
+                    <div class="form-group">
+                        <label for="edit-jtitle">標題</label>
+                        <input type="text" class="form-control" id="edit-jtitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-jcontent">內容</label>
+                        <textarea class="form-control" id="edit-jcontent" rows="5" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-jdate">日期</label>
+                        <input type="date" class="form-control" id="edit-jdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-jphoto">照片</label>
+                        <input type="file" class="form-control-file" id="edit-jphoto" accept=".jpg, .jpeg, .png"
+                            multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-jcycle">周數</label>
+                        <input type="number" class="form-control" id="edit-jcycle" placeholder="輸入第幾周" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-jfeeling">心情</label>
+                        <select class="form-control" id="edit-jfeeling" required>
+                            <option value="開心">開心</option>
+                            <option value="生氣">生氣</option>
+                            <option value="鬱悶">鬱悶</option>
+                            <option value="想吐">想吐</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">保存</button>
+                </form>
+                <div id="alertEditMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <nav aria-label="Page navigation">
+            <ul id="pagination" class="pagination justify-content-center"></ul>
+        </nav>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+
+    <script>
+        let userId = null;
+
+        function switchTemplate(templateClass) {
+            document.body.classList.remove('template1', 'template2', 'template3');
+            document.body.classList.add(templateClass);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Handle LIFF initialization and check login status
+        window.onload = async function () {
+            try {
+                await liff.init({ liffId: '2005754474-eLDEppxO' });
+                console.log('LIFF 初始化完成');
+                if (liff.isLoggedIn()) {
+                    handleLogin(); // 只有當用戶成功登錄時才觸發後續登錄處理
+                } else {
+                    console.log("用戶尚未登錄");
+                }
+            } catch (error) {
+                console.error('LIFF 初始化錯誤:', error);
+            }
+
+            // For 'jphoto' input
+            const fileInputJPhoto = document.getElementById('jphoto');
+            if (fileInputJPhoto) {
+                fileInputJPhoto.addEventListener('change', checkPhotoLimit);
+            }
+
+            // For 'edit-jphoto' input
+            const fileInputEditJPhoto = document.getElementById('edit-jphoto');
+            if (fileInputEditJPhoto) {
+                fileInputEditJPhoto.addEventListener('change', checkPhotoLimit1);
+            }
+        };
+
+        async function handleLogin() {
+            try {
+                const profile = await liff.getProfile();
+                userId = profile.userId;
+                console.log(`User ID: ${userId}`);
+                document.getElementById('userName').textContent = `Welcome, ${profile.displayName}`;
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('logoutButton').style.display = 'inline-block';
+                fetchEntries();  // Fetch diary entries after login
+            } catch (error) {
+                console.error('取得用戶資料錯誤:', error);
+            }
+        }
+
+        function login() {
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            } else {
+                handleLogin(); // 如果已登入，執行登入後的操作
+            }
+        }
+        function logout() {
+            liff.logout();
+            window.location.reload();
+        }
+        // 顯示日記的函數
+        function displayEntries(entries) {
+            const diaryContainer = document.getElementById('diary-entries');
+            diaryContainer.innerHTML = '';  // 清空容器
+
+            // 檢查是否有日記條目
+            if (entries.length === 0) {
+                diaryContainer.innerHTML = '<p>目前沒有日記。</p>';
+                return;
+            }
+            // 根據 jid 排序條目（jid 越大越在上面）
+            entries.sort((a, b) => b.jid - a.jid);
+
+
+            entries.forEach(entry => {
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('diary-entry', 'mb-3');
+                entryDiv.setAttribute('data-jid', entry.jid); // 添加 data-jid 屬性
+
+                const title = document.createElement('h2');
+                title.textContent = entry.title;
+
+                const content = document.createElement('p');
+                content.textContent = entry.content;
+
+                const date = document.createElement('p');
+                const formattedDate = new Date(entry.date).toISOString().slice(0, 10);  // 將日期格式化為 YYYY-MM-DD
+                date.textContent = `日期: ${formattedDate}`;
+
+
+                const cycle = document.createElement('p');
+                cycle.textContent = `週數: ${entry.cycle}`;
+
+                const feeling = document.createElement('p');
+                feeling.textContent = `心情: ${entry.feeling}`;
+
+                const photoContainer = document.createElement('div');
+                photoContainer.classList.add('d-flex', 'flex-wrap', 'mt-3');
+
+
+                entry.photos.forEach(photoUrl => {
+                    const img = document.createElement('img');
+                    img.src = photoUrl;
+                    img.alt = '日記照片';
+                    img.classList.add('diary-diary-image', 'm-2');
+                    photoContainer.appendChild(img);
+                });
+
+                // 編輯按鈕               
+                const editButton = document.createElement('button');
+                editButton.textContent = '編輯';
+                editButton.classList.add('btn', 'btn-custom', 'm-2');
+                editButton.onclick = function () {
+                    // console.log(entry.jid);  // 調試 jid 是否正確存在
+                    editDiary(entry.jid);  // 使用 jid 
+                };
+
+                // 刪除按鈕
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '刪除';
+                deleteButton.classList.add('btn', 'btn-delete', 'm-2');
+                deleteButton.onclick = function () {
+                    deleteDiary(entry.jid);  // 使用 jid 來刪除日記
+                };
+
+                entryDiv.appendChild(title);
+                entryDiv.appendChild(content);
+                entryDiv.appendChild(date);
+                entryDiv.appendChild(cycle);
+                entryDiv.appendChild(feeling);
+                entryDiv.appendChild(photoContainer);
+                entryDiv.appendChild(editButton); // 編輯
+                entryDiv.appendChild(deleteButton);//刪除
+
+                diaryContainer.appendChild(entryDiv);
+            });
+        }
+
+
+
+        // 獲取日記
+        function fetchEntries() {
+            if (!userId) {
+                console.error('無法取得日記，無法取得 userId');
+                showAlert('無法取得日記，無法取得使用者ID', 'danger');
+                return;
+            }
+
+            fetch(`/get_diaries/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Fetched entries:', data);
+                    if (data.entries && data.entries.length > 0) {
+                        displayEntries(data.entries);
+                    } else {
+                        document.getElementById('diary-entries').innerHTML = '<p>目前沒有日記。</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching diaries:', error);
+                    showAlert('獲取日記時出錯，請稍後重試。', 'danger');
+                });
+        }
+
+        //編輯日記
+        function editDiary(jid) {
+            // 使用 fetch 取得該 jid 的日記資料
+            fetch(`/get_diary/${userId}/${jid}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // 將日記的資料填入編輯表單中
+                        document.getElementById('edit-jtitle').value = data.entry.title; // 注意這裡根據 API 的返回結構調整
+                        document.getElementById('edit-jcontent').value = data.entry.content;
+                        document.getElementById('edit-jdate').value = data.entry.date;
+                        document.getElementById('edit-jcycle').value = data.entry.cycle;
+                        document.getElementById('edit-jfeeling').value = data.entry.feeling;
+
+                        // 存儲 jid，方便提交時使用
+                        document.getElementById('edit-diary-form').setAttribute('data-jid', jid);
+
+                        // 切換到編輯標籤
+                        $('.nav-tabs a[href="#edit"]').tab('show');
+                    } else {
+                        showAlert('無法取得日記資料', 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('獲取日記時發生錯誤:', error);
+                    showAlert('無法取得日記資料', 'danger');
+                });
+        }
+        //刪除日記
+        function deleteDiary(jid) {
+            if (!userId || !jid) {
+                console.error('無法刪除日記，無法取得 userId 或 jid');
+                showAlert('無法刪除日記，請稍後重試。', 'danger');
+                return;
+            }
+
+            if (confirm('您確定要刪除此日記嗎？')) {
+                fetch(`/delete_diary/${userId}/${jid}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showAlert('日記已成功刪除!', 'success');
+
+                            // 直接相應地從前端 UI 移除條目，而不重新載入整個頁面
+                            const entryDiv = document.querySelector(`.diary-entry[data-jid="${jid}"]`);
+                            if (entryDiv) {
+                                entryDiv.remove();
+                            }
+
+                            // 如果沒有更多日記條目，顯示相關的提示信息
+                            if (document.getElementById('diary-entries').children.length === 0) {
+                                document.getElementById('diary-entries').innerHTML = '<p>目前沒有日記。</p>';
+                            }
+                        } else {
+                            showAlert('刪除日記失敗，請稍後再試。', 'danger');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('刪除日記時發生錯誤:', error);
+                        showAlert('刪除日記失敗，請稍後再試。', 'danger');
+                    });
+            }
+        }
+
+        //一篇日記照片數量限制
+        function checkPhotoLimit() {
+            const fileInput = document.getElementById('jphoto');
+            const errorMessage = document.getElementById('error-message');
+
+            if (fileInput.files.length > 4) {
+                errorMessage.textContent = '您只能上傳最多 4 張照片';
+                fileInput.value = '';  // 清空選擇的文件
+            } else {
+                errorMessage.textContent = '';  // 清除錯誤消息
+            }
+        }
+
+        function checkPhotoLimit1() {
+            const fileInput = document.getElementById('edit-jphoto');
+            const errorMessage = document.getElementById('error-message');
+
+            if (fileInput.files.length > 4) {
+                errorMessage.textContent = '您只能上傳最多 4 張照片';
+                fileInput.value = '';  // 清空選擇的文件
+            } else {
+                errorMessage.textContent = '';  // 清除錯誤消息
+            }
+        }
+
+        document.getElementById('newdiaryForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Create a new FormData object from the form
+            const formData = new FormData();
+
+            // Append form fields to FormData
+            const title = document.getElementById('jtitle').value;
+            const content = document.getElementById('jcontent').value;
+            const date = document.getElementById('jdate').value;
+            const cycle = document.getElementById('jcycle').value;
+            const feeling = document.getElementById('jfeeling').value;
+            const photos = document.getElementById('jphoto').files;
+
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('date', date);
+            formData.append('cycle', cycle);
+            formData.append('feeling', feeling);
+
+            for (let i = 0; i < photos.length; i++) {
+                formData.append('photos', photos[i]);
+            }
+
+            // Send the form data to the server
+            fetch(`/add_diary/${userId}`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('日記新增成功!', 'success', 'alertMessage');
+                        fetchEntries(); // Refresh the list of entries
+                        // Optionally, reset the form
+                        document.getElementById('newdiaryForm').reset();
+                        $('.nav-tabs a[href="#home"]').tab('show'); // Switch back to the home tab
+                    } else {
+                        showAlert('日記新增失敗!', 'danger', 'alertMessage');
+                    }
+                })
+                .catch(error => {
+                    console.error('Add diary error:', error);
+                    showAlert('發生錯誤，請稍後再試。', 'danger', 'alertMessage');
+                });
+        });
+
+
+
+        // 提交編輯的日記
+        document.getElementById('edit-diary-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const jid = this.getAttribute('data-jid');
+
+            // 建立 FormData 物件
+            const formData = new FormData();
+
+            // 日記標題
+            const title = document.getElementById('edit-jtitle').value;
+            if (title) {
+                formData.append('edit-jtitle', title);
+            }
+
+            // 日記內容
+            const content = document.getElementById('edit-jcontent').value;
+            if (content) {
+                formData.append('edit-jcontent', content);
+            }
+
+            // 日期
+            const date = document.getElementById('edit-jdate').value;
+            if (date) {
+                formData.append('edit-jdate', date);
+            }
+
+            // 週期
+            const cycle = document.getElementById('edit-jcycle').value;
+            if (cycle) {
+                formData.append('edit-jcycle', cycle);
+            }
+
+            // 心情
+            const feeling = document.getElementById('edit-jfeeling').value;
+            if (feeling) {
+                formData.append('edit-jfeeling', feeling);
+            }
+
+            // 照片處理（如有）
+            const photos = document.getElementById('edit-jphoto').files;
+            if (photos.length > 0) {
+                for (let i = 0; i < photos.length; i++) {
+                    formData.append('edit-jphoto', photos[i]); // 確保名稱是後端接收的 'edit-jphoto'
+                }
+            }
+
+            // 發送 PUT 請求，包含表單數據和照片
+            fetch(`/edit_diary/${userId}/${jid}`, {
+                method: 'PUT',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('日記更新成功!', 'success', 'alertEditMessage');
+                        fetchEntries();  // 更新顯示日記
+                        $('.nav-tabs a[href="#home"]').tab('show');  // 返回首頁
+                    } else {
+                        showAlert('日記更新失敗', 'danger', 'alertEditMessage');
+                    }
+                })
+                .catch(error => {
+                    console.error('發生錯誤:', error);
+                    showAlert('日記更新失敗', 'danger', 'alertEditMessage');
+                });
+        });
+        //pdf
+        document.getElementById('generatePdfButton').addEventListener('click', function () {
+            fetch('/generate_pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: userId,  // 傳遞 userId 到後端
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const pdfLink = document.createElement('a');
+                        pdfLink.href = data.pdf_url;
+                        pdfLink.target = '_blank';
+                        pdfLink.textContent = '點擊下載 PDF';
+                        document.getElementById('pdfResult').appendChild(pdfLink);
+                        showAlert('PDF 已成功生成!', 'success');
+                    } else {
+                        showAlert('生成 PDF 失敗，請稍後再試。', 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('生成 PDF 時發生錯誤:', error);
+                    showAlert('生成 PDF 失敗，請稍後再試。', 'danger');
+                });
+        });
+
+
+
+        // 顯示錯誤或成功訊息
+        function showAlert(message, type, elementId) {
+            const alertBox = document.getElementById(elementId);
+            alertBox.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                alertBox.innerHTML = '';
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

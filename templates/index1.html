@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社群推薦</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+</head>
+
+<body>
+	
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid justify-content-between">
+      <div id="myLinks">
+
+      </div>
+      <a class="navbar-brand" href="#">
+        <img src="{{ url_for('static', filename='image/logo2.jpg') }}" alt="...">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">首頁</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              社群分類
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#thisyear">今年寶媽寶爸專區</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#pregnant">懷孕中的媽咪</a></li>
+              <li><a class="dropdown-item" href="#childcare">育兒、育嬰新手爸媽</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Aboutus">關於我們</a>
+          </li>
+        </ul>
+
+        <!--導覽列Search-->
+
+        <!--導覽列Search-->
+      </div>
+    </div>
+  </nav>
+
+
+  <div id="myContent" class="row justify-content-center">
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p9.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <!--<img src="image/p9.jpg" class="card-img-top width: 200px" alt="...">-->
+      <div class="card-body">
+        <h4 class="card-title">👨‍👩‍👧‍👦雙北親子育兒討論區🏞親子餐廳／親子步道／親子飯店／親子公園／親子農場／童裝／副食品／新手媽咪／親子</h4>
+        <p class="card-text">親子、雙北、新手媽咪、育兒</p>
+        <a href="https://openchat.line.me/tw/cover/mkaNBmN-SH0zC_-7JHwbqUUqEWdp9nzVbcCv4SgPdaCtxvJhA5O6gU7PeHs?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p1.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">孕/新手媽咪交流天地</h4>
+        <p class="card-text">懷孕、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/srnB4LTrLq79iuy7h1M8-PwcH2eeNhZ9i4Cfsd5YjN0m3XP6vVsChx2oUYY?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p6.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">新竹新手媽媽聊天室</h4>
+        <p class="card-text">懷孕、新竹、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/p3heEbqHNHaAlj5REB9HoMobGPeb4GdPExNphDRYhvgXbd-lDPUZpH35MWo?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p4.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">懷孕百科全書</h4>
+        <p class="card-text">懷孕、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/bDnaY-hKThH-HWFhX3FWeNaIcPyk6VbUZ6iuAWrlawzL4WOq_SX_bIN2N1s?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p2.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">8粉媽咪懷孕育兒交流區</h4>
+        <p class="card-text">懷孕、育兒</p>
+        <a href="https://openchat.line.me/tw/cover/F2A53nSFNHHn57XXq0IhoqQ35GG1VCKyAuNGWsLjGHptIG6Nj52xnJyishU?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p8.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">親子育兒討論交流區📚（新手爸媽/嬰幼兒衛教/育兒交流/副食品/旅遊/好康講座）</h4>
+        <p class="card-text">親子、育兒、新手爸媽</p>
+        <a href="https://openchat.line.me/tw/cover/JVF7Gt7XRbSWTwyYKgvMo-OXfSnlHT000TwEk7Raq2VjYo-pC97L1v7Nq4o?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p3.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">新手懷孕媽咪討論區</h4>
+        <p class="card-text">懷孕、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/oJqhZ8rSi3l1_qXo4LKyz4sDKZFM51lluxcSqWQsWla0yL5BzrEKeINNYUo?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p10.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">👑在家教育💛資源💛聯盟》💖國小/幼稚園💖線上課程/網路資源💖新手媽咪💖親子/育兒</h4>
+        <p class="card-text">幼教、親子、育兒、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/_C8K6ZbtViDX6F9EaT6Lbj2FoLhMdfzCDUBfs3dlmV4e8wy14xIpbuu4Esg?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p7.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">幼教師/寵愛媽咪/新手爸媽/教具好物討論</h4>
+        <p class="card-text">幼教、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/JG2B6GEHzksKqIYpf0tFJvCSqVtvjHD2GwxiBZbu_W9euTV34VN07BIgdw4?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+    <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+      <img src="{{ url_for('static', filename='image/p5.jpg') }}" class="card-img-top width: 200px" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">🐲寶🐰寶🐯虎寶🐮寶懷孕產後交流補給站🍼</h4>
+        <p class="card-text">懷孕、今年寶寶、新手媽咪</p>
+        <a href="https://openchat.line.me/tw/cover/NN59PI66XzP4tzfg7MBzAMl4FP_B3_NkKhAQcGqRxgF2TM1oKPLYvE_GvHc?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+          class="btn btn-outline-primary">連結點這邊！</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="thisyear">
+    <div class="yeartitle">
+      <h4>今年寶媽寶爸專區</h4>
+      <div class="row justify-content-center">
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p11.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">🐲龍寶寶/備孕/懷孕交流區🐉</h4>
+            <p class="card-text">備孕、懷孕、今年寶寶、新手媽咪</p>
+            <a href="https://openchat.line.me/tw/cover/gvA5MZx0L0TU6BS5n9oA7ifG66Erbf1pock0goEC4Mm-NX5DXh2AtMRHT9g?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p13.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">2024龍寶寶媽媽🐲Baby Dragon🐲</h4>
+            <p class="card-text">懷孕、今年寶寶、新手媽咪</p>
+            <a href="https://openchat.line.me/tw/cover/K52sw9_Ey6K5OOSkXgS6HSnQKMw78pRjy3M6dU5bPIFXfWWsdCiSIx500cw?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p14.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">2024龍寶寶底加🐲Baby Dragon🐲</h4>
+            <p class="card-text">懷孕、今年寶寶、新手媽咪</p>
+            <a href="https://openchat.line.me/tw/cover/QYWNTN607S2gmW_hSn9FABjghtNiWPpB7aL-WNu3ib5OOUStjgXDCcTGrsI?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p5.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">🐲寶🐰寶🐯虎寶🐮寶懷孕產後交流補給站🍼</h4>
+            <p class="card-text">懷孕、今年寶寶、新手媽咪</p>
+            <a href="https://openchat.line.me/tw/cover/NN59PI66XzP4tzfg7MBzAMl4FP_B3_NkKhAQcGqRxgF2TM1oKPLYvE_GvHc?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p18.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">2024龍寶寶｜陪你一起當媽媽｜新手爸媽交流站</h4>
+            <p class="card-text">懷孕、今年寶寶、新手爸媽</p>
+            <a href="https://openchat.line.me/tw/cover/wBb33snsyfkdWcICIYkDHzQLNtKTb_oL-lzVkvEdzHicZwl7DN55HdYzGng?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p16.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">2024-2025 龍寶媽咪交流群</h4>
+            <p class="card-text">懷孕、今年寶寶、新手媽咪</p>
+            <a href="https://openchat.line.me/tw/cover/wsIMSYTmj6jchJ9uE8IuYUIN3ipn6rUXPqgjTiAJWAEEL_Lz6eQqUXN5GNQ?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+
+        <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+          <img src="{{ url_for('static', filename='image/p12.jpg') }}" class="card-img-top width: 200px" alt="...">
+          <div class="card-body">
+            <h4 class="card-title">🐲2024龍寶媽咪育兒經分享社群🐲</h4>
+            <p class="card-text">懷孕、今年寶寶、新手媽咪、育兒</p>
+            <a href="https://openchat.line.me/tw/cover/goOUgQzaxmWiK5ai5gC9OXjLSCHU6VYr-eLtbJHVJz67uyEvK5T35LA0Gh0?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+              class="btn btn-outline-primary">連結點這邊！</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="pregnant">
+      <div class="childtitle">
+        <h4>懷孕中的媽咪</h4>
+        <div class="row justify-content-center">
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p1.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">孕/新手媽咪交流天地</h4>
+              <p class="card-text">懷孕、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/srnB4LTrLq79iuy7h1M8-PwcH2eeNhZ9i4Cfsd5YjN0m3XP6vVsChx2oUYY?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p4.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">懷孕百科全書</h4>
+              <p class="card-text">懷孕、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/bDnaY-hKThH-HWFhX3FWeNaIcPyk6VbUZ6iuAWrlawzL4WOq_SX_bIN2N1s?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+      
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p2.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">8粉媽咪懷孕育兒交流區</h4>
+              <p class="card-text">懷孕、育兒</p>
+              <a href="https://openchat.line.me/tw/cover/F2A53nSFNHHn57XXq0IhoqQ35GG1VCKyAuNGWsLjGHptIG6Nj52xnJyishU?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p19.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">🌸新手媽咪、孕媽 育兒親子團💯🥳</h4>
+              <p class="card-text">親子、育兒、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/g5tfecmfXyoXJs9t1ZlTSGAsMBz8gRRUWbzK52-7A5t6ZvKlunwdPL2Dq1k?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p3.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">新手懷孕媽咪討論區</h4>
+              <p class="card-text">懷孕、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/oJqhZ8rSi3l1_qXo4LKyz4sDKZFM51lluxcSqWQsWla0yL5BzrEKeINNYUo?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+          
+      </div>
+    </div>
+
+
+    <div id="childcare">
+      <div class="childtitle">
+        <h4>育兒、育嬰新手爸媽</h4>
+        <div class="row justify-content-center">
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p9.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">👨‍👩‍👧‍👦雙北親子育兒討論區🏞親子餐廳／親子步道／親子飯店／親子公園／親子農場／童裝／副食品／新手媽咪／親子</h4>
+              <p class="card-text">親子、雙北、新手媽咪、育兒</p>
+              <a href="https://openchat.line.me/tw/cover/mkaNBmN-SH0zC_-7JHwbqUUqEWdp9nzVbcCv4SgPdaCtxvJhA5O6gU7PeHs?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p10.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">👑在家教育💛資源💛聯盟》💖國小/幼稚園💖線上課程/網路資源💖新手媽咪💖親子/育兒</h4>
+              <p class="card-text">幼教、親子、育兒、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/_C8K6ZbtViDX6F9EaT6Lbj2FoLhMdfzCDUBfs3dlmV4e8wy14xIpbuu4Esg?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p20.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">寶貝總動員👶🏻陪你一起育兒｜育兒交流｜親子旅遊｜拍照景點</h4>
+              <p class="card-text">親子、育兒、新手爸媽</p>
+              <a href="https://openchat.line.me/tw/cover/745DCJb12chT0Ahwo0Hn8IAkpzQXWcmykTidiVU6AfZR-yrQaFMO4E_J7zA?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p17.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">媽媽聊心室-育兒、家庭討論區</h4>
+              <p class="card-text">育兒、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/VHNDmL47DBCgM5aCBVjvCFQ1Doohkwe6gMXjclL2S5hkMz_uZ--8s4MEZj8?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+  
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p15.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">虎兔龍寶媽媽經🐯🐰🐲</h4>
+              <p class="card-text">育兒、育嬰、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/Qlk_SExzq51CczWf824imt1yHiZySbFHmOYthrvepE8dnp38FH1c2elQqGE?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p21.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">Ptt mom&baby 育兒心事交流群</h4>
+              <p class="card-text">育兒、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/jJkQ1Yxaa29LC7vMSE_p4X2OqNETIWKo7WjXnWVY2MOLheeBVvZWfDMVEmg?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+  
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p8.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">親子育兒討論交流區📚（新手爸媽/嬰幼兒衛教/育兒交流/副食品/旅遊/好康講座）</h4>
+              <p class="card-text">親子、育兒、新手爸媽</p>
+              <a href="https://openchat.line.me/tw/cover/JVF7Gt7XRbSWTwyYKgvMo-OXfSnlHT000TwEk7Raq2VjYo-pC97L1v7Nq4o?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+
+          <div class="card col-6 col-md-4 col-xl-3 mx-3 my-3" style="width: 17rem">
+            <img src="{{ url_for('static', filename='image/p19.jpg') }}" class="card-img-top width: 200px" alt="...">
+            <div class="card-body">
+              <h4 class="card-title">🌸新手媽咪、孕媽 育兒親子團💯🥳</h4>
+              <p class="card-text">親子、育兒、新手媽咪</p>
+              <a href="https://openchat.line.me/tw/cover/g5tfecmfXyoXJs9t1ZlTSGAsMBz8gRRUWbzK52-7A5t6ZvKlunwdPL2Dq1k?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default"
+                class="btn btn-outline-primary">連結點這邊！</a>
+            </div>
+          </div>
+          
+      </div>
+    </div>
+
+
+    <!--
+    <img src="image/p1.jpg" width="300" alt="">
+    <a
+      href="https://openchat.line.me/tw/cover/srnB4LTrLq79iuy7h1M8-PwcH2eeNhZ9i4Cfsd5YjN0m3XP6vVsChx2oUYY?utm_source=line-openchat-seo&utm_medium=search_keyword&utm_campaign=default">連結點這邊！</a>
+  </div>
+  -->
+
+</body>
+
+<footer class="py-3 justify-content-center" id="Aboutus">
+  <div class="myAbout">
+    <h2 class="">關於我們</h2>
+    <p>Gmail : bmcs1231@gmail.com</p>
+  </div>
+  <div class="myText">
+    <p>&copy 2024 Be Mom Cares保留所有權利。</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</html>

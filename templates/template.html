@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <h1>{{ title }}</h1>
+
+    <!-- 依次顯示日記條目的內容 -->
+    {% for entry in entries %}
+    <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+        {% if entry.photo_urls %}
+            {% for photo_url in entry.photo_urls %}
+            <img src="{{ photo_url }}" alt="Journal Image" style="max-width: 100px; height: 100px; display: inline-block; margin-right: 10px;">
+            {% endfor %}
+        {% endif %}
+        <div style="display: inline-block; margin-left: 10px;">
+            <strong>標題:</strong> {{ entry.jtitle }}<br>
+            <strong>內容:</strong> {{ entry.jcontent }}<br>
+            <strong>週期:</strong> {{ entry.jcycle }}<br>
+            <strong>日期:</strong> {{ entry.jdate }}<br>
+            <strong>心情:</strong> {{ entry.jfeeling }}<br>
+        </div>
+    </div>
+    {% endfor %}
+
+
+</body>
+
+</html>
