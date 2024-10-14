@@ -71,8 +71,7 @@ def page2():
 #-----關鍵字Start-----
 
 # 設置 OpenAI API Key
-client = OpenAI(api_key='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')
-
+client = OpenAI(api_key=os.environment('Api_Key'))
 # 初始化變量來跟踪系統狀態
 is_active = False
 
