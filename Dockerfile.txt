@@ -1,4 +1,6 @@
 FROM python:3.11
+# 使用 Python 3.11 的基底映像檔
+FROM python:3.11
 
 # 安裝 wkhtmltopdf
 RUN apt-get update && apt-get install -y wkhtmltopdf
@@ -10,8 +12,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# 再次確認安裝 gunicorn（可選）
+RUN pip install gunicorn
+
 # 複製所有文件到容器
 COPY . .
 
-# 指定啟動命令
-CMD ["gunicorn", "finaltest1:app"]
+# 使用環境變數 $PORT 來綁定埠號
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT}", "finaltest1:app"]
