@@ -1,6 +1,6 @@
 Flask==2.2.2
-flask_sqlalchemy==3.0.0
-SQLAlchemy==2.0.21
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.46
 line_bot_sdk==1.18.0
 openai==1.44.1
 pdfkit==1.0.0
