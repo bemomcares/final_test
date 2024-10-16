@@ -3,6 +3,7 @@ flask_sqlalchemy==3.0.0
 line_bot_sdk==1.18.0
 openai==1.44.1
 pdfkit==1.0.0
+psycopg2==2.9.9
 python-dotenv==1.0.1
 gunicorn
 Werkzeug==2.2.2
