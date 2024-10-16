@@ -5,5 +5,6 @@ openai==1.44.1
 pdfkit==1.0.0
 psycopg2==2.9.9
 python-dotenv==1.0.1
+schedule==1.2.2
 gunicorn
 Werkzeug==2.2.2
