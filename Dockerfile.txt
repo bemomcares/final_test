@@ -9,10 +9,13 @@ WORKDIR /app
 
 # 複製 requirements.txt 並安裝依賴
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# 單獨安裝 gunicorn（如果未安裝）
-RUN pip install gunicorn
+# 再次手動安裝 gunicorn 以確保其存在
+RUN pip install --no-cache-dir gunicorn
+
+# 確認 gunicorn 是否已正確安裝，這行會顯示 gunicorn 的安裝路徑
+RUN which gunicorn
 
 # 複製所有文件到容器
 COPY . .
