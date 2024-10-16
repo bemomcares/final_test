@@ -9,3 +9,4 @@ python-dotenv==1.0.1
 schedule==1.2.2
 gunicorn
 Werkzeug==2.2.2
+xhtml2pdf==0.2.16
