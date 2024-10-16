@@ -1,4 +1,3 @@
-FROM python:3.11
 # 使用 Python 3.11 的基底映像檔
 FROM python:3.11
 
@@ -12,7 +11,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# 再次確認安裝 gunicorn（可選）
+# 單獨安裝 gunicorn（如果未安裝）
 RUN pip install gunicorn
 
 # 複製所有文件到容器
