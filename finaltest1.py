@@ -84,7 +84,7 @@ GITHUB_REPO = 'bemomcares/photos'
 GITHUB_FOLDER = 'jphoto'
 
 # wkhtmltopdf 配置
-config = pdfkit.configuration(wkhtmltopdf=r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe')
+config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
 #-----日記End-----
 
