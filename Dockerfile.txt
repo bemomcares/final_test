@@ -1,0 +1,17 @@
+FROM python:3.11
+
+# 安裝 wkhtmltopdf
+RUN apt-get update && apt-get install -y wkhtmltopdf
+
+# 設置工作目錄
+WORKDIR /app
+
+# 複製 requirements.txt 並安裝依賴
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# 複製所有文件到容器
+COPY . .
+
+# 指定啟動命令
+CMD ["gunicorn", "finaltest1:app"]
