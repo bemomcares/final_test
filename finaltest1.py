@@ -95,7 +95,7 @@ DATABASE_CONFIG = {
     'dbname': 'dbname_3qcx',
     'user': 'admin',
     'password': 'ucKH8MhsmXSQEaS69FnvP5YDeMW95WaC',
-    'host': 'dpg-csb7h6888fa8c73cluhag-a.singapore-postgres.render.com',
+    'host': 'dpg-csb7h688fa8c73cluhag-a',
     'port': '5432'
 }
 
