@@ -99,12 +99,21 @@
             color: red;
             border-color: red;
         }
+
+        .custom-alert {
+            /* 僅顯示字體，無背景色 */
+            color: black;
+            /* 可依需求調整 */
+            background-color: transparent;
+            padding: 0;
+            /* 移除內間距 */
+            margin: 0;
+            /* 移除外邊距 */
+        }
     </style>
 </head>
 
 <body class="template1">
-
-
     <nav class="navbar navbar-light bg-light">
         <div class="container">
             <h2>Diary</h2>
@@ -124,6 +133,8 @@
         <button class="btn btn-template" onclick="switchTemplate('template3')">紫色</button>
         <button id="generatePdfButton" class="btn btn-template" type="button">生成並上傳 PDF</button>
         <div id="pdfResult"></div>
+        <div id="pdfshowAlert"></div>
+        <div id="error-message" style="color: red;">請開啟瀏覽器</div>
     </div>
 
     <div class="container mt-5">
@@ -163,7 +174,7 @@
                     <div class="form-group">
                         <label for="jphoto">照片</label>
                         <input type="file" class="form-control-file" id="jphoto" accept=".jpg, .jpeg, .png" multiple>
-                        <div id="error-message" style="color: red;">(最多上傳四張)</div>
+                        <div id="error-message" style="color: red;">只能上傳四張</div>
                     </div>
                     <div class="form-group">
                         <label for="jcycle">周數</label>
@@ -202,6 +213,9 @@
                         <label for="edit-jphoto">照片</label>
                         <input type="file" class="form-control-file" id="edit-jphoto" accept=".jpg, .jpeg, .png"
                             multiple>
+                        <img id="edit-jphoto-preview" src="" alt="照片預覽"
+                            style="display:none; max-width: 150px; margin-top: 10px;">
+                        <div id="error-message" style="color: red;">只能上傳四張</div>
                     </div>
                     <div class="form-group">
                         <label for="edit-jcycle">周數</label>
@@ -242,12 +256,13 @@
             document.body.classList.add(templateClass);
         }
 
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
         }
 
-        // Handle LIFF initialization and check login status
+        // 處理 LIFF 初始化並檢查登入狀態
         window.onload = async function () {
             try {
                 await liff.init({ liffId: '2005754474-eLDEppxO' });
@@ -272,7 +287,37 @@
             if (fileInputEditJPhoto) {
                 fileInputEditJPhoto.addEventListener('change', checkPhotoLimit1);
             }
+
+            const generatePdfButton = document.getElementById('generatePdfButton');
+            if (generatePdfButton) {
+                generatePdfButton.addEventListener('change', pdfshowAlert);
+            }
         };
+
+        function checkPhotoLimit() {
+            const fileInput = document.getElementById('jphoto');
+            const errorMessage = document.getElementById('error-message');
+
+            if (fileInput.files.length > 4) {
+                errorMessage.textContent = '您只能上傳最多 4 張照片';
+                fileInput.value = '';  // 清空選擇的文件
+            } else {
+                errorMessage.textContent = '';  // 清除錯誤消息
+            }
+        }
+
+        function checkPhotoLimit1() {
+            const fileInput = document.getElementById('edit-jphoto');
+            const errorMessage = document.getElementById('error-message');
+
+            if (fileInput.files.length > 4) {
+                errorMessage.textContent = '您只能上傳最多 4 張照片';
+                fileInput.value = '';  // 清空選擇的文件
+            } else {
+                errorMessage.textContent = '';  // 清除錯誤消息
+            }
+        }
+
 
         async function handleLogin() {
             try {
@@ -299,6 +344,7 @@
             liff.logout();
             window.location.reload();
         }
+
         // 顯示日記的函數
         function displayEntries(entries) {
             const diaryContainer = document.getElementById('diary-entries');
@@ -378,7 +424,6 @@
         }
 
 
-
         // 獲取日記
         function fetchEntries() {
             if (!userId) {
@@ -427,6 +472,16 @@
                         document.getElementById('edit-jcycle').value = data.entry.cycle;
                         document.getElementById('edit-jfeeling').value = data.entry.feeling;
 
+                        // 顯示已上傳的照片，如果存在的話
+                        if (data.entry.photo_url) {
+                            const previewImage = document.getElementById('edit-jphoto-preview');
+                            previewImage.src = data.entry.photo_url;
+                            previewImage.style.display = 'block'; // 顯示圖片
+                        } else {
+                            const previewImage = document.getElementById('edit-jphoto-preview');
+                            previewImage.style.display = 'none'; // 隱藏圖片
+                        }
+
                         // 存儲 jid，方便提交時使用
                         document.getElementById('edit-diary-form').setAttribute('data-jid', jid);
 
@@ -441,68 +496,35 @@
                     showAlert('無法取得日記資料', 'danger');
                 });
         }
-        //刪除日記
+
+
         function deleteDiary(jid) {
-            if (!userId || !jid) {
-                console.error('無法刪除日記，無法取得 userId 或 jid');
-                showAlert('無法刪除日記，請稍後重試。', 'danger');
-                return;
+            // 確認用戶是否確定要刪除日記
+            const confirmation = confirm('您確定要刪除這篇日記嗎？這個動作無法撤銷。');
+            if (!confirmation) {
+                return; // 用戶選擇取消，直接返回
             }
-
-            if (confirm('您確定要刪除此日記嗎？')) {
-                fetch(`/delete_diary/${userId}/${jid}`, {
-                    method: 'DELETE'
+            // 發送刪除請求到後端
+            fetch(`/delete_diary/${userId}/${jid}`, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        // 刪除成功後，獲取更新的日記條目
+                        fetch(`/get_diaries/${userId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.entries && data.entries.length > 0) {
+                                    displayEntries(data.entries); // 使用更新的日記數據
+                                } else {
+                                    document.getElementById('diary-entries').innerHTML = '<p>目前沒有日記。</p>';
+                                }
+                            });
+                    } else {
+                        console.error('刪除日記時出錯');
+                    }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showAlert('日記已成功刪除!', 'success');
-
-                            // 直接相應地從前端 UI 移除條目，而不重新載入整個頁面
-                            const entryDiv = document.querySelector(`.diary-entry[data-jid="${jid}"]`);
-                            if (entryDiv) {
-                                entryDiv.remove();
-                            }
-
-                            // 如果沒有更多日記條目，顯示相關的提示信息
-                            if (document.getElementById('diary-entries').children.length === 0) {
-                                document.getElementById('diary-entries').innerHTML = '<p>目前沒有日記。</p>';
-                            }
-                        } else {
-                            showAlert('刪除日記失敗，請稍後再試。', 'danger');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('刪除日記時發生錯誤:', error);
-                        showAlert('刪除日記失敗，請稍後再試。', 'danger');
-                    });
-            }
+                .catch(error => console.error('刪除請求失敗:', error));
         }
 
-        //一篇日記照片數量限制
-        function checkPhotoLimit() {
-            const fileInput = document.getElementById('jphoto');
-            const errorMessage = document.getElementById('error-message');
-
-            if (fileInput.files.length > 4) {
-                errorMessage.textContent = '您只能上傳最多 4 張照片';
-                fileInput.value = '';  // 清空選擇的文件
-            } else {
-                errorMessage.textContent = '';  // 清除錯誤消息
-            }
-        }
-
-        function checkPhotoLimit1() {
-            const fileInput = document.getElementById('edit-jphoto');
-            const errorMessage = document.getElementById('error-message');
-
-            if (fileInput.files.length > 4) {
-                errorMessage.textContent = '您只能上傳最多 4 張照片';
-                fileInput.value = '';  // 清空選擇的文件
-            } else {
-                errorMessage.textContent = '';  // 清除錯誤消息
-            }
-        }
 
         document.getElementById('newdiaryForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -620,34 +642,79 @@
                     showAlert('日記更新失敗', 'danger', 'alertEditMessage');
                 });
         });
-        //pdf
-        document.getElementById('generatePdfButton').addEventListener('click', function () {
-            fetch('/generate_pdf', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    userId: userId,  // 傳遞 userId 到後端
+
+
+        //pdf     
+        document.addEventListener('DOMContentLoaded', function () {
+            const generatePdfButton = document.getElementById('generatePdfButton');
+
+            generatePdfButton.addEventListener('click', function () {
+                // 檢查 userId
+                console.log("User ID:", userId);
+
+                // 觸發 AJAX 請求到後端生成 PDF
+                fetch('/generate_pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId: userId })
                 })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const pdfLink = document.createElement('a');
-                        pdfLink.href = data.pdf_url;
-                        pdfLink.target = '_blank';
-                        pdfLink.textContent = '點擊下載 PDF';
-                        document.getElementById('pdfResult').appendChild(pdfLink);
-                        showAlert('PDF 已成功生成!', 'success');
-                    } else {
-                        showAlert('生成 PDF 失敗，請稍後再試。', 'danger');
-                    }
-                })
-                .catch(error => {
-                    console.error('生成 PDF 時發生錯誤:', error);
-                    showAlert('生成 PDF 失敗，請稍後再試。', 'danger');
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data); // 用於調試
+                        const pdfResultDiv = document.getElementById('pdfResult');
+
+                        // 清除舊的 PDF 連結
+                        while (pdfResultDiv.firstChild) {
+                            pdfResultDiv.removeChild(pdfResultDiv.firstChild);
+                        }
+
+                        // 無論成功與否，都清除并更新提示
+                        const pdfshowAlertDiv = document.getElementById('pdfshowAlert');
+                        pdfshowAlertDiv.innerHTML = ''; // 清除之前的提示
+
+                        // 如果生成成功
+                        if (data.success) {
+                            // 顯示新的 PDF 下載連結
+                            const pdfLink = document.createElement('a');
+                            pdfLink.href = data.pdf_url;
+                            pdfLink.target = '_blank';
+                            pdfLink.textContent = '點擊下載 PDF';
+                            pdfResultDiv.appendChild(pdfLink);
+
+                            // 顯示成功的提示
+                            pdfshowAlert('PDF 已成功生成!', 'success');
+                        } else {
+                            // 顯示失敗的提示
+                            pdfshowAlert('生成 PDF 失敗，請稍後再試。', 'danger');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('生成 PDF 時發生錯誤:', error);
+                        const pdfshowAlertDiv = document.getElementById('pdfshowAlert');
+                        pdfshowAlertDiv.innerHTML = ''; // 清除之前的提示
+                        pdfshowAlert('生成 PDF 失敗，請稍後再試。', 'danger');
+                    });
+            });
+
+
+            // 顯示提示信息的函數
+            function pdfshowAlert(message, type) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `custom-alert`; // 使用自定义样式类
+                alertDiv.textContent = message;
+
+                // 插入到 pdfshowAlert 区域
+                const pdfshowAlertDiv = document.getElementById('pdfshowAlert');
+                pdfshowAlertDiv.innerHTML = ''; // 確保清除之前的提示
+                pdfshowAlertDiv.appendChild(alertDiv);
+
+                // 自動隱藏提示
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
         });
 
 
