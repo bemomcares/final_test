@@ -92,10 +92,10 @@ config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
 # 資料庫連接信息
 DATABASE_CONFIG = {
-    'dbname': 'Bemomcares',
-    'user': 'postgres',
-    'password': '123456',
-    'host': 'localhost',
+    'dbname': 'dbname_3qcx',
+    'user': 'admin',
+    'password': 'ucKH8MhsmXSQEaS69FnvP5YDeMW95WaC',
+    'host': 'dpg-csb7h6888fa8c73cluhag-a.singapore-postgres.render.com',
     'port': '5432'
 }
 
