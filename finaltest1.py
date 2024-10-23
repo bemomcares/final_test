@@ -72,7 +72,7 @@ def page2():
 
 # 設置 OpenAI API Key
 api_key = os.environ.get('Api_Key')
-client = OpenAI(api_key)
+client = OpenAI(api_key = api_key)
 
 # 初始化變量來跟踪系統狀態
 is_active = False
