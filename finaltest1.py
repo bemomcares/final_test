@@ -42,7 +42,7 @@ from io import BytesIO
 import logging
 import pdfkit
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL'))
 # db=SQLAlchemy(app)
 db.init_app(app)
 # engine=create_engine('postgresql://admin:123456@127.0.0.1:5432/Bemomcares')
