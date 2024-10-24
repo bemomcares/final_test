@@ -1,0 +1,92 @@
+
+
+#myContent{
+  margin-top: 60;
+  white-space: nowrap;
+}
+
+.myText p{
+  font-size: 14px;
+    display: flex; /* 使用 flexbox 布局 */
+    align-items: center;
+    justify-content: center; /* 水平居中 */
+}
+
+.card-body{
+     
+  flex-wrap: wrap;
+}
+
+.card-body a{
+  margin-top: 30px;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+}
+
+.card-title{
+  margin: 0 auto; /* 水平居中 */
+  text-align: center; /* 文本居中 */
+  margin-bottom: 5px;
+  margin-top: 0;
+
+  white-space: nowrap; /* 禁止文本换行 */
+  overflow: hidden; /* 超出容器部分隐藏 */
+  text-overflow: ellipsis; /* 超出部分显示省略号 */
+  max-width: 17rem; /* 最大宽度 */
+  
+}
+
+.card-text{
+  margin: 0 auto; /* 水平居中 */
+  text-align: center; /* 文本居中 */
+  font-size:smaller;
+}
+
+.card img{
+  height: 400px;
+}
+
+.row{
+  margin: 60px;
+}
+
+
+
+
+
+.nav-box{
+  margin-top: 55px;
+}
+
+/*讓導覽列固定於畫面上方*/
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* 让导航栏水平充满整个屏幕 */
+  z-index: 1000; /* 确保导航栏位于其他内容上方 */
+}
+
+.navbar-brand img{
+  max-width: 50px;
+  height: auto;
+}
+
+.dropdown-item:active{
+  background-color: #32329d; /* 深蓝色背景 */
+  color: #ffffff; /* 白色文本 */
+}
+
+footer{
+  background-color: black;
+  color: white;
+}
+
+.myAbout{
+  margin: 0 auto;
+}
+
+.myAbout p{
+  font-size: 15px;
+}
+
