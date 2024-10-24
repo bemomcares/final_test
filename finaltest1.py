@@ -231,12 +231,6 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
             
     elif user_mod[user_id] == 2: #用戶正在：2 週期紀錄 模式
-        # 用戶更新狀態
-        # if user_id in user_states and user_states[user_id] == "updating":
-        #     handle_user_update(event, user_msg, user_id)
-        # else:
-        #     handle_new_input(event, user_msg, user_id, existing_data)
-        # return  # 系統未啟動時，不回應任何其他訊息
         user_msg = event.message.text
         print(f"Received1-3 user_msg: {user_msg}")
         
@@ -249,6 +243,7 @@ def handle_message(event):
             response = "確認資訊正確，歡迎使用其他功能！"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
             user_mod[user_id] = 0
+            user_states[user_id] == None
     
         else:
             if user_id in user_states and user_states[user_id] == "updating":
