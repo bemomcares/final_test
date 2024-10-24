@@ -243,7 +243,7 @@ def handle_message(event):
             response = "確認資訊正確，歡迎使用其他功能！"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
             user_mod[user_id] = 0
-            user_states[user_id] == None
+            user_states.pop(user_id, None)
     
         else:
             if user_id in user_states and user_states[user_id] == "updating":
