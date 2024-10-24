@@ -80,7 +80,7 @@ is_active = False
 
 #-----日記Start-----
 
-GITHUB_API_TOKEN = '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'
+GITHUB_API_TOKEN = 'os.getenv('photo_token')'
 GITHUB_REPO = 'bemomcares/photos'
 GITHUB_FOLDER = 'jphoto'
 
