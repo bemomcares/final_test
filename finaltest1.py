@@ -304,7 +304,6 @@ def handle_new_input(event, user_msg, user_id, existing_data):
     # print(f"Received22 user_msg: {user_msg}")
     
     if existing_data:
-       
         week = calculate_week(datetime.strptime(existing_data['last_period_date'], "%Y-%m-%d").date())
         tip = get_pregnancy_tip(week)
         response_text = (
