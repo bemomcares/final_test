@@ -84,8 +84,8 @@ GITHUB_API_TOKEN = os.getenv('photo_token')
 GITHUB_REPO = 'bemomcares/photos'
 GITHUB_FOLDER = 'jphoto'
 
-# 賦予 wkhtmltopdf 可執行權限
-os.chmod('./bin/wkhtmltopdf', 0o755)
+# 顯示檔案位置
+os.system('which wkhtmltopdf')
 
 # wkhtmltopdf 配置
 config = pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf')
