@@ -256,48 +256,6 @@ def handle_message(event):
             else:
                 handle_new_input(event, user_msg, user_id, existing_data)
             return  # 系統未啟動時，不回應任何其他訊息
-            
-        
-    
-    # global is_active #關鍵字的啟動與否判斷函數
-    # if not is_active:
-    #     if user_msg == '@關鍵字':
-    #         is_active = True
-    #         response = "歡迎回到關鍵字問答，您可以繼續提問。"
-    #         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
-    #     elif user_msg == '@舒緩運動':
-    #         sendCarousel(event)
-    #     elif user_msg == '@週期紀錄':
-            
-    #         # 檢查用戶資料是否存在於資料庫中
-    #         existing_data = get_user_data(user_id)
-    #         print(f"Received user_states: {user_states}")
-    #         print(f"Received existing_data: {existing_data}")
-            
-
-    #     # 用戶更新狀態
-    #     if user_id in user_states and user_states[user_id] == "updating":
-    #         handle_user_update(event, user_msg, user_id)
-    #     else:
-    #         handle_new_input(event, user_msg, user_id, existing_data)
-    #     return  # 系統未啟動時，不回應任何其他訊息
-    
-    # else:
-    #     if user_msg in ['結束關鍵字', '結束','結束問答']:
-    #         response = "結束問答，感謝您的使用！"
-    #         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
-    #         is_active = False  # 將系統狀態設為不活躍
-    #     elif user_msg in ['系統簡介', '介紹','簡介']:
-    #         response = system_intro(user_msg)
-    #         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
-    #     elif user_msg == '@關鍵字':
-    #         response = "歡迎使用關鍵字問答！\n如果想知道更多關於系統簡介與使用說明，請輸入【系統簡介】或【介紹】"
-    #         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
-    #     else:
-    #         response = default_response(user_msg)
-    #         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
-    
-    #print(f"從事件中處理的 user_id: {user_id}")
 
 
 #--週期Start--
@@ -334,24 +292,7 @@ def handle_user_update(event, user_msg, user_id):
         else:
             response = "請輸入從今天起最多 280 天內的正確日期。"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
-        
-        # estimated_due_date = last_period_date + timedelta(days=280)
-        # save_user_data(user_id, last_period_date, estimated_due_date)
 
-        # response_text = (
-        #     f"最後一次月經的第一天已更新為 {last_period_date.strftime('%Y-%m-%d')}，"
-        #     f"預計的生產日期是 {estimated_due_date.strftime('%Y-%m-%d')}。\n"
-        #     "再次點擊選單中【週期紀錄】功能可查看當前週數。"
-        # )
-        
-        # user_mod[user_id] = 0
-
-        # user_states.pop(user_id, None)
-
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     TextSendMessage(text=response_text)
-        #)
     except ValueError:
         line_bot_api.reply_message(
             event.reply_token,
