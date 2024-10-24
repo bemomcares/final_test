@@ -88,7 +88,7 @@ GITHUB_FOLDER = 'jphoto'
 os.system('which wkhtmltopdf')
 
 # wkhtmltopdf 配置
-#config = pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf')
+config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
 #-----日記End-----
 
