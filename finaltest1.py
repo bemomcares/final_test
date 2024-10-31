@@ -388,7 +388,7 @@ def send_weekly_reminder():
 def weekly_reminder_schedule():
     """設置每周的指定時間推播"""
     print("weekly_reminder_schedule() has started.")
-    schedule.every().thursday.at("15:50").do(send_weekly_reminder)
+    schedule.every().thursday.at("15:56").do(send_weekly_reminder)
     
     while True:
         schedule.run_pending()
