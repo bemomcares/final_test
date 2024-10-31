@@ -359,7 +359,8 @@ def handle_new_input(event, user_msg, user_id, existing_data):
 # 用來儲存用戶回應狀態的簡單字典
 user_states = {}
 
-def send_weekly_reminder():  """每周發送提醒給用戶"""
+def send_weekly_reminder():
+    """每周發送提醒給用戶"""
     print("send_weekly_reminder() is running...")
     try:
         conn = psycopg2.connect(**DATABASE_CONFIG)
@@ -384,7 +385,8 @@ def send_weekly_reminder():  """每周發送提醒給用戶"""
         conn.close()
 
 
-def weekly_reminder_schedule():     """設置每周的指定時間推播"""
+def weekly_reminder_schedule():
+    """設置每周的指定時間推播"""
     print("weekly_reminder_schedule() has started.")
     schedule.every().thursday.at("15:50").do(send_weekly_reminder)
     
