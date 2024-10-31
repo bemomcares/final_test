@@ -50,6 +50,42 @@ db.init_app(app)
 line_bot_api = LineBotApi(os.environ.get('Channel_Access_Token'))
 handler = WebhookHandler(os.environ.get('Channel_Secret'))
 
+def send_weekly_reminder():
+    """每周發送提醒給用戶"""
+    print("send_weekly_reminder() is running...")
+    try:
+        conn = psycopg2.connect(**DATABASE_CONFIG)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute("SELECT user_id, last_period_date FROM users")
+        users = cursor.fetchall()
+
+        for user in users:  # 確保 last_period_date 已經是日期對象
+            last_period_date = user['last_period_date']
+            week = calculate_week(last_period_date)
+            tip = get_pregnancy_tip(week)
+            reminder_text = (
+                f"每週提醒：\n"
+                f"當前週數：{week} 週。\n"
+                f"{tip}"
+            )
+            line_bot_api.push_message(user['user_id'], TextSendMessage(text=reminder_text))
+    except Exception as e:
+        print(f"周提醒發送錯誤: {e}")
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def weekly_reminder_schedule():
+    """設置每周的指定時間推播"""
+    print("weekly_reminder_schedule() has started.")
+    schedule.every().friday.at("00:58").do(send_weekly_reminder)
+    print("Timer set for weekly reminder...")
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(60)  # 每分鐘檢查一次
+
 threading.Thread(target=weekly_reminder_schedule).start()
 
 #LIFF靜態頁面
@@ -360,42 +396,6 @@ def handle_new_input(event, user_msg, user_id, existing_data):
 
 # 用來儲存用戶回應狀態的簡單字典
 user_states = {}
-
-def send_weekly_reminder():
-    """每周發送提醒給用戶"""
-    print("send_weekly_reminder() is running...")
-    try:
-        conn = psycopg2.connect(**DATABASE_CONFIG)
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
-        cursor.execute("SELECT user_id, last_period_date FROM users")
-        users = cursor.fetchall()
-
-        for user in users:  # 確保 last_period_date 已經是日期對象
-            last_period_date = user['last_period_date']
-            week = calculate_week(last_period_date)
-            tip = get_pregnancy_tip(week)
-            reminder_text = (
-                f"每週提醒：\n"
-                f"當前週數：{week} 週。\n"
-                f"{tip}"
-            )
-            line_bot_api.push_message(user['user_id'], TextSendMessage(text=reminder_text))
-    except Exception as e:
-        print(f"周提醒發送錯誤: {e}")
-    finally:
-        cursor.close()
-        conn.close()
-
-
-def weekly_reminder_schedule():
-    """設置每周的指定時間推播"""
-    print("weekly_reminder_schedule() has started.")
-    schedule.every().friday.at("00:48").do(send_weekly_reminder)
-    print("Timer set for weekly reminder...")
-    
-    while True:
-        schedule.run_pending()
-        time.sleep(60)  # 每分鐘檢查一次
         
 #--週期End--
     
