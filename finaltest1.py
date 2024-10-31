@@ -50,6 +50,8 @@ db.init_app(app)
 line_bot_api = LineBotApi(os.environ.get('Channel_Access_Token'))
 handler = WebhookHandler(os.environ.get('Channel_Secret'))
 
+threading.Thread(target=weekly_reminder_schedule).start()
+
 #LIFF靜態頁面
 @app.route('/page')
 def page():
@@ -388,7 +390,7 @@ def send_weekly_reminder():
 def weekly_reminder_schedule():
     """設置每周的指定時間推播"""
     print("weekly_reminder_schedule() has started.")
-    schedule.every().friday.at("00:31").do(send_weekly_reminder)
+    schedule.every().friday.at("00:41").do(send_weekly_reminder)
     print("Timer set for weekly reminder...")
     
     while True:
@@ -1147,8 +1149,7 @@ def callback():
 
 
 if __name__ == '__main__':
-    print("Starting weekly reminder schedule...")
-    threading.Thread(target=weekly_reminder_schedule).start()
+    #threading.Thread(target=weekly_reminder_schedule).start()
     app.run()
     
     
