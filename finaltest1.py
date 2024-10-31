@@ -367,8 +367,7 @@ def send_weekly_reminder():
         cursor.execute("SELECT user_id, last_period_date FROM users")
         users = cursor.fetchall()
 
-        for user in users:
-            # 確保 last_period_date 已經是日期對象
+        for user in users:  # 確保 last_period_date 已經是日期對象
             last_period_date = user['last_period_date']
             week = calculate_week(last_period_date)
             tip = get_pregnancy_tip(week)
@@ -387,7 +386,7 @@ def send_weekly_reminder():
 
 def weekly_reminder_schedule():
     """設置每周的指定時間推播"""
-    schedule.every().thursday.at("22:52").do(send_weekly_reminder)
+    schedule.every().thursday.at("23:02").do(send_weekly_reminder)
     
     while True:
         schedule.run_pending()
