@@ -1149,6 +1149,6 @@ def callback():
 if __name__ == '__main__':
     print("Starting weekly reminder schedule...")
     threading.Thread(target=weekly_reminder_schedule).start()
-    #app.run()
+    app.run()
     
     
