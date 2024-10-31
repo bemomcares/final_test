@@ -466,21 +466,23 @@
                 .then(data => {
                     if (data.success) {
                         // 將日記的資料填入編輯表單中
-                        document.getElementById('edit-jtitle').value = data.entry.title; // 注意這裡根據 API 的返回結構調整
+                        const entryDate = new Date(data.entry.date).toISOString().split('T')[0];
+                        document.getElementById('edit-jtitle').value = data.entry.title;
                         document.getElementById('edit-jcontent').value = data.entry.content;
-                        document.getElementById('edit-jdate').value = data.entry.date;
+                        document.getElementById('edit-jdate').value = entryDate; // 轉換後的日期格式
                         document.getElementById('edit-jcycle').value = data.entry.cycle;
                         document.getElementById('edit-jfeeling').value = data.entry.feeling;
 
                         // 顯示已上傳的照片，如果存在的話
                         if (data.entry.photo_url) {
                             const previewImage = document.getElementById('edit-jphoto-preview');
-                            previewImage.src = data.entry.photo_url;
-                            previewImage.style.display = 'block'; // 顯示圖片
+                            previewImage.src = data.entry.photo_url; // 設置圖片來源
+                            previewImage.style.display = 'block';    // 確保顯示
+                            window.open(data.entry.photo_url, '_blank');
                         } else {
-                            const previewImage = document.getElementById('edit-jphoto-preview');
-                            previewImage.style.display = 'none'; // 隱藏圖片
+                            document.getElementById('edit-jphoto-preview').style.display = 'none';
                         }
+
 
                         // 存儲 jid，方便提交時使用
                         document.getElementById('edit-diary-form').setAttribute('data-jid', jid);
