@@ -96,10 +96,10 @@ config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
 # 資料庫連接信息
 DATABASE_CONFIG = {
-    'dbname': 'dbname_3qcx',
+    'dbname': 'dbname_0cxc',
     'user': 'admin',
-    'password': 'ucKH8MhsmXSQEaS69FnvP5YDeMW95WaC',
-    'host': 'dpg-csb7h688fa8c73cluhag-a',
+    'password': 'K0xRJBEHFQWnUo1MNNFQFDucXtzIYxwV',
+    'host': 'dpg-cshk62aj1k6c7399ea5g-a',
     'port': '5432'
 }
 
